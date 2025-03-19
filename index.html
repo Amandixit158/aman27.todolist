@@ -4,104 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do List</title>
-  
+<style>
+   body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #f0f4c3, #4fc3f7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Center-align the text */
+    height: 100vh;
+    margin: 0;
+}
+
+.todo-container {
+    background: transparent;
+    width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+</style>
 </head>
-<style>/* styles.css */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f6c2c2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    
-    .todo-container {
-      background: #f3aaaa;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      width: 50%;
-      height: 70%;
-    }
-    
-    h1 {
-      text-align: center;
-    }
-    
-    #task-input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #f5d8d8;
-      border-radius: 4px;
-    }
-    
-    #add-task-btn {
-      width: 100%;
-      padding: 10px;
-      background-color: #28a745;
-      color: rgb(255, 215, 215);
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    #add-task-btn:hover {
-      background-color: #218838;
-    }
-    
-    #task-list {
-      list-style-type: none;
-      padding: 0;
-    }
-    
-    #task-list li {
-      padding: 10px;
-      margin: 5px 0;
-      background-color: #d6eaff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    </style>
 <body>
   <div class="todo-container">
     <h1>To-Do List</h1>
-    <input type="text" id="task-input" placeholder="Add New Task">
-    <button id="add-task-btn">ADD TASK</button>
-    <ul id="task-list"></ul> 
+    <input type="text" id="taskInput" placeholder="Add a new task..." />
+    <button id="addTaskButton">Add Task</button>
+    <ul id="taskList"></ul>
   </div>
-  <script src="script.js"></script> 
 </body>
 <script>
-// script.js
-const addTaskBtn = document.getElementById("add-task-btn");
-const taskInput = document.getElementById("task-input");
-const taskList = document.getElementById("task-list");
+    // script.js
+document.getElementById('addTaskButton').addEventListener('click', addTask);
 
-addTaskBtn.addEventListener("click", () => {
-  const taskText = taskInput.value.trim(); // खाली जगह हटाकर टास्क लें
-  if (taskText === "") {
-    alert("Please add a task!");
-    return;
+function addTask() {
+  const taskInput = document.getElementById('taskInput');
+  const taskValue = taskInput.value.trim();
+
+  if (taskValue) {
+    const taskList = document.getElementById('taskList');
+    const li = document.createElement('li');
+
+    li.innerHTML = `
+      ${taskValue} 
+      <span onclick="removeTask(this)">×</span>
+    `;
+
+    taskList.appendChild(li);
+    taskInput.value = ''; // Clear the input field
+  } else {
+    alert('Please enter a task.');
   }
+}
 
-  const taskItem = document.createElement("li");
-  taskItem.textContent = taskText;
+function removeTask(taskElement) {
+  taskElement.parentElement.remove();
+}
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "cross";
-  deleteBtn.style.marginLeft = "10px";
-  deleteBtn.addEventListener("click", () => taskItem.remove()); 
-
-  taskItem.appendChild(deleteBtn);
-  taskList.appendChild(taskItem);
-
-  taskInput.value = ""; 
-});
 </script>
 </html>
